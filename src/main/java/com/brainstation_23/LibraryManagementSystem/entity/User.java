@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class User {
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -50,7 +50,4 @@ public class User {
     protected void onUpdate(){
         updatedAt = LocalDateTime.now();
     }
-
-
-
 }

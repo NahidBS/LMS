@@ -1,6 +1,7 @@
 package com.brainstation_23.LibraryManagementSystem.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,11 +22,12 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private category category;
+    private Category category;
 
     private String name;
     private String author;
 
+    @Column(columnDefinition = "TEXT")
     private String shortDescription;
     private int totalCopies = 0;
     private int availableCopies = 0;
