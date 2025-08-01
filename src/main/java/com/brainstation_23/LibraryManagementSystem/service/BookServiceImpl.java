@@ -1,7 +1,9 @@
 package com.brainstation_23.LibraryManagementSystem.service;
 
 import com.brainstation_23.LibraryManagementSystem.entity.Book;
+import com.brainstation_23.LibraryManagementSystem.entity.Category;
 import com.brainstation_23.LibraryManagementSystem.repository.BookRepository;
+import com.brainstation_23.LibraryManagementSystem.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +14,27 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepo;
+    private final CategoryRepository categoryRepo;
 
-    public BookServiceImpl(BookRepository bookRepo){
+
+    public BookServiceImpl(BookRepository bookRepo, CategoryRepository categoryRepo){
         this.bookRepo = bookRepo;
+        this.categoryRepo = categoryRepo;
     }
 
     @Override
     public Book createBook(Book book){
+//        Long categoryId = book.getCategory().getId();
+//        Category category = categoryRepo.findById(categoryId)
+//                .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+//        book.setCategory(category);
+        if (book.getCategory() == null || book.getCategory().getId() == null) {
+            throw new IllegalArgumentException("Category is required");
+        }
+        Long categoryId = book.getCategory().getId();
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+        book.setCategory(category);
         return  bookRepo.save(book);
     }
 
@@ -44,6 +60,15 @@ public class BookServiceImpl implements BookService {
         book.setPdfFile(updatedBook.getPdfFile());
         book.setAudioFile(updatedBook.getAudioFile());
         book.setCategory(updatedBook.getCategory());
+
+        if (updatedBook.getCategory() == null || updatedBook.getCategory().getId() == null) {
+            throw new IllegalArgumentException("Category is required");
+        }
+        Long categoryId = updatedBook.getCategory().getId();
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+        book.setCategory(category);
+
         return bookRepo.save(book);
     }
 
