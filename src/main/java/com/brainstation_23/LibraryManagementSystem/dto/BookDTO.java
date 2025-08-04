@@ -12,7 +12,7 @@ public class BookDTO {
     private Long id;
 
     @Schema(description = "ID of the book's category", example = "2")
-    private Long category;
+    private Long categoryId;
 
     @Schema(description = "Title of the book", example = "Clean Code")
     private String name;

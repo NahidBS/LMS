@@ -2,11 +2,6 @@ package com.brainstation_23.LibraryManagementSystem.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
-//import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +15,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = true)
+    @Column(unique = true, nullable = false)
     private String categoryName;
 
     private LocalDateTime createdAt;
