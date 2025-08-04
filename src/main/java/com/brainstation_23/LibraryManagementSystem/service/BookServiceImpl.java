@@ -26,18 +26,35 @@ public class BookServiceImpl implements BookService {
     //
     @Override
     public Book createBook(Book book){
-//        Long categoryId = book.getCategory().getId();
-//        Category category = categoryRepo.findById(categoryId)
-//                .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
-//        book.setCategory(category);
-        if (book.getCategory() == null || book.getCategory().getId() == null) {
-            throw new IllegalArgumentException("Category is required");
+//        if (book.getCategory() == null || book.getCategory().getId() == null) {
+//            // Fallback to default category
+//            Category defaultCategory = categoryRepo.findByName("Uncategorized");
+//            if (defaultCategory == null) {
+//                throw new RuntimeException("Default category 'Uncategorized' not found.");
+//            }
+//            book.setCategory(defaultCategory);
+//        } else {
+//            Long categoryId = book.getCategory().getId();
+//            Category category = categoryRepo.findById(categoryId)
+//                    .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+//            book.setCategory(category);
+//        }
+//        return  bookRepo.save(book);
+        if (book.getCategory() == null) {
+            Category defaultCategory = categoryRepo.findByCategoryName("Uncategorized")
+                    .orElseGet(() -> {
+                        Category newCategory = new Category();
+                        newCategory.setCategoryName("Uncategorized");
+                        return categoryRepo.save(newCategory);
+                    });
+            book.setCategory(defaultCategory);
+        } else {
+            Long categoryId = book.getCategory().getId();
+            Category category = categoryRepo.findById(categoryId)
+                    .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+            book.setCategory(category);
         }
-        Long categoryId = book.getCategory().getId();
-        Category category = categoryRepo.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
-        book.setCategory(category);
-        return  bookRepo.save(book);
+        return bookRepo.save(book);
     }
 
     @Override
