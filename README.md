@@ -62,18 +62,16 @@ com.brainstation_23.LibraryManagementSystem
    git clone https://github.com/NahidBS/LMS.git
    cd LMS
 Create a PostgreSQL database and configure application.properties:
-
-properties
 ```bash
-spring.datasource.url=jdbc:postgresql://localhost:5432/lms_db
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+   spring.datasource.url=jdbc:postgresql://localhost:5432/lms_db
+   spring.datasource.username=your_username
+   spring.datasource.password=your_password
 Run the project:
-
-From IDE: Run LibraryManagementSystemApplication.java
+   From IDE: Run LibraryManagementSystemApplication.java
 
 From terminal:
-```bash
-./mvnw spring-boot:run
+   ```bash
+   ./mvnw spring-boot:run
 Access Swagger UI at:
-http://localhost:8080/swagger-ui/index.html
+   ```bash
+   http://localhost:8080/swagger-ui/index.html
