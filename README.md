@@ -21,4 +21,59 @@ A full-stack Library Management System built with **Java**, **Spring Boot**, and
 - **Documentation**: Swagger/OpenAPI
 
 ## 📂 Project Structure
+com.brainstation_23.LibraryManagementSystem
+├── controller
+│ ├── BookController.java
+│ └── CategoryController.java
+├── dto
+│ ├── BookDTO.java
+│ └── CategoryDTO.java
+├── entity
+│ ├── Book.java
+│ └── Category.java
+├── repository
+│ ├── BookRepository.java
+│ └── CategoryRepository.java
+├── service
+│ ├── BookService.java
+│ └── CategoryService.java
+└── config
+└── SwaggerConfig.java
 
+
+## 📦 API Endpoints
+
+### Book
+- `POST /book/create` - Add a new book
+- `GET /book/list` - List all books
+- `PUT /book/edit/{id}` - Update book by ID
+- `DELETE /book/delete/{id}` - Delete book by ID
+
+### Category
+- `POST /category/create` - Add a new category
+- `GET /category/list` - List all categories
+- `PUT /category/edit/{id}` - Update category
+- `DELETE /category/delete/{id}` - Delete category
+
+## ⚙️ How to Run
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/NahidBS/LMS.git
+   cd LMS
+Create a PostgreSQL database and configure application.properties:
+
+properties
+```bash
+spring.datasource.url=jdbc:postgresql://localhost:5432/lms_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+Run the project:
+
+From IDE: Run LibraryManagementSystemApplication.java
+
+From terminal:
+```bash
+./mvnw spring-boot:run
+Access Swagger UI at:
+http://localhost:8080/swagger-ui/index.html
