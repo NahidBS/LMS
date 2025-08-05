@@ -21,24 +21,25 @@ A full-stack Library Management System built with **Java**, **Spring Boot**, and
 - **Documentation**: Swagger/OpenAPI
 
 ## 📂 Project Structure
-com.brainstation_23.LibraryManagementSystem
-├── controller
-│ ├── BookController.java
-│ └── CategoryController.java
-├── dto
-│ ├── BookDTO.java
-│ └── CategoryDTO.java
-├── entity
-│ ├── Book.java
-│ └── Category.java
-├── repository
-│ ├── BookRepository.java
-│ └── CategoryRepository.java
-├── service
-│ ├── BookService.java
-│ └── CategoryService.java
-└── config
-└── SwaggerConfig.java
+   ```bash
+   com.brainstation_23.LibraryManagementSystem
+   ├── controller
+   │ ├── BookController.java
+   │ └── CategoryController.java
+   ├── dto
+   │ ├── BookDTO.java
+   │ └── CategoryDTO.java
+   ├── entity
+   │ ├── Book.java
+   │ └── Category.java
+   ├── repository
+   │ ├── BookRepository.java
+   │ └── CategoryRepository.java
+   ├── service
+   │ ├── BookService.java
+   │ └── CategoryService.java
+   └── config
+   └── SwaggerConfig.java
 
 
 ## 📦 API Endpoints
@@ -61,7 +62,7 @@ com.brainstation_23.LibraryManagementSystem
    ```bash
    git clone https://github.com/NahidBS/LMS.git
    cd LMS
-2. Create a PostgreSQL database and configure application.properties:
+2. Create a PostgreSQL database and configure `application.properties`:
    ```bash
    spring.datasource.url=jdbc:postgresql://localhost:5432/lms_db
    spring.datasource.username=your_username
@@ -72,6 +73,7 @@ com.brainstation_23.LibraryManagementSystem
 3.1 From terminal:
    ```bash
    ./mvnw spring-boot:run
+
 4. Access Swagger UI at:
    ```bash
    http://localhost:8080/swagger-ui/index.html
