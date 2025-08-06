@@ -4,12 +4,11 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "borrows")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Setting {
+public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

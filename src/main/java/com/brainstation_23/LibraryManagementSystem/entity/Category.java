@@ -3,9 +3,9 @@ package com.brainstation_23.LibraryManagementSystem.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,8 +15,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String categoryName;
+    @Column(unique = true, nullable = true)
+    private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Book> books;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

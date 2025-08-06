@@ -7,21 +7,56 @@ import com.brainstation_23.LibraryManagementSystem.repository.CategoryRepository
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring" , uses = {CategoryResolver.class})
-//public abstract class BookMapper {
-public interface BookMapper{
-    @Autowired
+@Mapper(componentModel = "spring")
+public interface BookMapper {
+    @Mapping(source = "category.id", target = "categoryId")
+    BookDTO toDTO(Book book);
+
+    @Mapping(source = "categoryId", target = "category.id")
+    Book toEntity(BookDTO dto);
+}
+
+
+
+
+
+
+
+
+
+
+
+//@Mapper(componentModel = "spring", uses = {CategoryMapper.class})
+////@Mapper(componentModel = "spring", uses = {CategoryResolver.class})
+//public interface BookMapper {
+//
+//    // Category (Entity) → CategoryDTO (in BookDTO)
+//    @Mapping(source = "category", target = "category")
+//    BookDTO toDTO(Book book);
+//
+//    // CategoryDTO → Category (Entity)
+//    @Mapping(source = "category", target = "category")
+//    Book toEntity(BookDTO bookDTO);
+//}
+//@Mapper(componentModel = "spring" , uses = {CategoryResolver.class})
+////public abstract class BookMapper {
+//public interface BookMapper {
+//    //    @Autowired
+//    BookDTO toDTO(Book book);
+//
+//    Book toEntity(BookDTO bookDTO);
+//}
 //    protected CategoryResolver categoryResolver;
 
     // Entity (Book) → DTO (BookDTO)
-    @Mapping(source = "category.id", target = "categoryId")
+//    @Mapping(source = "category.id", target = "categoryId")
 //    public abstract BookDTO toDTO(Book book);
-    BookDTO toDTO(Book book);
+//    BookDTO toDTO(Book book);
 
     // DTO (BookDTO) → Entity (Book)
-    @Mapping(source = "categoryId", target = "category")
+//    @Mapping(source = "categoryId", target = "category")
 //    public abstract Book toEntity(BookDTO dto);
-    Book toEntity(BookDTO bookDTO);
+//    Book toEntity(BookDTO bookDTO);
 
 //    @Named("resolveCategory")
 //    public Category mapCategory(Long categoryId){
@@ -35,4 +70,4 @@ public interface BookMapper{
 //            return categoryRepo.findById(id).orElse(null);
 //        }
 //    }
-}
+//}

@@ -17,11 +17,34 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepo;
+    private final CategoryRepository categoryRepo;
     private final BookMapper bookMapper;
 
     @Override
     public BookDTO createBook(BookDTO bookDTO){
         Book book = bookMapper.toEntity(bookDTO);// Convert DTO to Entity
+
+        if (book.getCategory() == null || book.getCategory().getId() == null) {
+            Category defaultCategory = categoryRepo.findByCategoryName("Uncategorized")
+                    .orElseGet(() -> {
+                        Category newCat = new Category();
+                        newCat.setCategoryName("Uncategorized");
+                        return categoryRepo.save(newCat);
+                    });
+            book.setCategory(defaultCategory);
+        } else {
+            Long categoryId = book.getCategory().getId();
+            Category category = categoryRepo.findById(categoryId)
+                    .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+            book.setCategory(category);
+        }
+
+
+//        Category category = categoryRepo.findById(book.getCategory().getId())
+//                .orElseThrow(() -> new RuntimeException("Category not found with id " + book.getCategory().getId()));
+//
+//        book.setCategory(category);
+
         Book saved = bookRepo.save(book);// Save entity to the database
         return bookMapper.toDTO(saved);  // Convert saved entity back to DTO to return
     }
@@ -34,12 +57,24 @@ public class BookServiceImpl implements BookService {
         return bookDTOlist;
     }
     public BookDTO updateBook(Long id, BookDTO bookDTO){
-        Book book = bookRepo.findById(id).orElseThrow(() -> new RuntimeException("Book Not Found"));
+        Book existing = bookRepo.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
         Book updated = bookMapper.toEntity(bookDTO);
-        updated.setId(book.getId()); // Keep the same ID
+        updated.setId(existing.getId());
+
+        if (updated.getCategory() == null || updated.getCategory().getId() == null) {
+            throw new RuntimeException("Category ID must be provided");
+        }
+        Category category = categoryRepo.findById(updated.getCategory().getId())
+                .orElseThrow(() -> new RuntimeException("Category not found with id " + updated.getCategory().getId()));
+
+        updated.setCategory(category);
+
+//        Book updated = bookMapper.toEntity(bookDTO);
+//        updated.setId(book.getId()); // Keep the same ID
         Book saved = bookRepo.save(updated);
         return bookMapper.toDTO(saved);
     }
+
     public void deleteBook(Long id){
         bookRepo.deleteById(id);
     }

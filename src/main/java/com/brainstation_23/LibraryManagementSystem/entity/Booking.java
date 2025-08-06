@@ -1,8 +1,6 @@
 package com.brainstation_23.LibraryManagementSystem.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,15 +15,12 @@ public class Booking {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
-    @JoinColumn(name = "book_id")
     private Book book;
 
     private LocalDateTime bookingDate;
-    private LocalDateTime expiryDate;
+    private LocalDateTime expirationDateDate;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
