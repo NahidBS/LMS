@@ -1,6 +1,7 @@
 package com.brainstation_23.LibraryManagementSystem.controller;
 
-import com.brainstation_23.LibraryManagementSystem.dto.BookDTO;
+import com.brainstation_23.LibraryManagementSystem.dto.request.BookRequestDTO;
+import com.brainstation_23.LibraryManagementSystem.dto.response.BookResponseDTO;
 import com.brainstation_23.LibraryManagementSystem.entity.Book;
 import com.brainstation_23.LibraryManagementSystem.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,82 +9,59 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
+@Tag(name = "Book Management", description = "Book management APIs")
 public class BookController {
     private final BookService bookService;
 
     @PostMapping("/create")
-    public ResponseEntity<BookDTO> create(@RequestBody BookDTO bookDTO){
-        BookDTO created = bookService.createBook(bookDTO);
+    @Operation(summary = "Create new book")
+    public ResponseEntity<BookResponseDTO> create(@RequestBody BookRequestDTO request){
+        BookResponseDTO created = bookService.createBook(request);
         return ResponseEntity.ok(created);
     }
 
-    @GetMapping("List")
-    public ResponseEntity<List<BookDTO>> listBooks(){
-        List<BookDTO> books = bookService.getAllBooks();
+    @GetMapping("/list")
+    @Operation(summary = "Get all books")
+    public ResponseEntity<List<BookResponseDTO>> listBooks(){
+        List<BookResponseDTO> books = bookService.getAllBooks();
         return ResponseEntity.ok(books);
     }
 
     @GetMapping("/{id}/is_available")
+    @Operation(summary = "Check if book is available")
     public ResponseEntity<Boolean> isBookAvailable(@PathVariable Long id){
-        BookDTO book = bookService.getBookById(id);
+        BookResponseDTO book = bookService.getBookById(id);
         boolean isAvailable = book.getAvailableCopies() > 0;
         return ResponseEntity.ok(isAvailable);
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO){
-        return ResponseEntity.ok(bookService.updateBook(id, bookDTO));
+    @Operation(summary = "Update book")
+    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody BookRequestDTO request){
+        return ResponseEntity.ok(bookService.updateBook(id, request));
     }
 
     @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Delete book")
     public ResponseEntity<String> deleteBook(@PathVariable Long id){
         bookService.deleteBook(id);
-//        return  ResponseEntity.noContent().build();
         return  ResponseEntity.ok("Book deleted successfully");
     }
 
     @GetMapping("/retrieve/{id}")
-    public ResponseEntity<BookDTO> getBook(@PathVariable Long id){
-        BookDTO book = bookService.getBookById(id);
+    @Operation(summary = "Get book by ID")
+    public ResponseEntity<BookResponseDTO> getBook(@PathVariable Long id){
+        BookResponseDTO book = bookService.getBookById(id);
         return ResponseEntity.ok(book);
     }
-
-
-
-
-
-//    public BookController(BookService bookService){
-//        this.bookService = bookService;
-//    }
-//    @PostMapping
-//    public ResponseEntity<Book> create(@RequestBody Book book){
-//        return ResponseEntity.ok(bookService.createBook(book));
-//    }
-//    @GetMapping
-//    public ResponseEntity<List<Book>> getAll(){
-//        return ResponseEntity.ok(bookService.getAllBooks());
-//    }
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Book> getById(@PathVariable Long id){
-//        return bookService.getBookById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-//    }
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody Book book){
-//        return  ResponseEntity.ok(bookService.updateBook(id, book));
-//    }
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> delete(@PathVariable Long id){
-//        bookService.deleteBook(id);
-//        return ResponseEntity.noContent().build();
-//    }
 
 }

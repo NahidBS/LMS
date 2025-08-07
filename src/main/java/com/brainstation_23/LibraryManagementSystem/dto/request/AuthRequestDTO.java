@@ -1,6 +1,6 @@
-package com.brainstation_23.LibraryManagementSystem.dto;
+package com.brainstation_23.LibraryManagementSystem.dto.request;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class AuthRequestDTO {
